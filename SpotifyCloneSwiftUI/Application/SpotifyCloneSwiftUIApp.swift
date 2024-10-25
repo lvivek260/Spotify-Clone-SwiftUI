@@ -11,7 +11,7 @@ import SwiftUI
 struct SpotifyCloneSwiftUIApp: App {
     var body: some Scene {
         WindowGroup {
-            MyTabBarView()
+            OnboardingFirstView()
                 .preferredColorScheme(.dark) // Forces dark mode
         }
     }
