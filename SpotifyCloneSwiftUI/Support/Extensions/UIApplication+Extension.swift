@@ -8,7 +8,6 @@
 import SwiftUI
 
 extension UIApplication {
-    
     func changeRootViewController<Content: View>(to view: Content) {
         guard let window = connectedScenes
             .compactMap({ $0 as? UIWindowScene })
@@ -16,7 +15,6 @@ extension UIApplication {
             .first(where: { $0.isKeyWindow }) else {
             return
         }
-
         window.rootViewController = UIHostingController(rootView: view)
         window.makeKeyAndVisible()
     }

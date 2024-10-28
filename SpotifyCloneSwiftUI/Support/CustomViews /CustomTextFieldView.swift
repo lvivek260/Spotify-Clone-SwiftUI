@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct CustomTextFieldView: View {
-    @State var text: String = ""
+    @Binding var text: String
+    @FocusState private var isTextFieldFocused: Bool
     let placeHolder: String
     
     var body: some View {
@@ -25,14 +26,19 @@ struct CustomTextFieldView: View {
                 .foregroundColor(.white)
                 .font(.system(size: 16, weight: .medium))
                 .padding([.leading, .trailing], 20)
-            
+                .focused($isTextFieldFocused)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .overlay(
             RoundedRectangle(cornerRadius: 32)
                 .stroke(Color.gray, lineWidth: 1)
-                
+                .onTapGesture {
+                    isTextFieldFocused = true
+                }
         )
+        .onTapGesture {
+            isTextFieldFocused = true
+        }
     }
 }
 

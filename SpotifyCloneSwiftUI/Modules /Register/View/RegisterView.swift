@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RegisterView: View {
     
-    private let viewModel = RegisterViewModel()
+    @ObservedObject var viewModel = RegisterViewModel()
     
     var body: some View {
         ZStack {
@@ -25,7 +25,9 @@ struct RegisterView: View {
                         textFields
                         
                         CustomButton(title: "Create Account") {
-                            UIApplication.shared.changeRootViewController(to: MyTabBarView())
+                            if viewModel.validation() {
+                                UIApplication.shared.changeRootViewController(to: MyTabBarView())
+                            }
                         }
                         .frame(height: 80)
                         
@@ -36,6 +38,9 @@ struct RegisterView: View {
                     Spacer()
                 }
             }
+        }
+        .alert("Validation Error", isPresented: $viewModel.isShowAlert, actions: {}){
+            Text(viewModel.alertMessage)
         }
         .background(Color(.customBackground))
         .navigationBarHidden(true)
@@ -60,14 +65,17 @@ struct RegisterView: View {
     
     private var textFields: some View {
         VStack(spacing: 16) {
-            CustomTextFieldView(text: "", placeHolder: "Full Name")
+            CustomTextFieldView(text: $viewModel.txtFullName, placeHolder: "Full Name")
                 .frame(height: 80)
+                .keyboardType(.default)
             
-            CustomTextFieldView(text: "", placeHolder: "Enter Email ")
+            CustomTextFieldView(text: $viewModel.txtEmail, placeHolder: "Enter Email")
                 .frame(height: 80)
+                .keyboardType(.emailAddress)
             
-            CustomTextFieldView(text: "", placeHolder: "Password")
+            CustomTextFieldView(text: $viewModel.txtPassword, placeHolder: "Password")
                 .frame(height: 80)
+                .keyboardType(.default)
         }
     }
     
